@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   'extends': [
     'plugin:vue/essential',
-    '@vue/standard'
+    'eslint:recommended'
   ],
   rules: {
     // allow async-await
