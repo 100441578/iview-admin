@@ -10,7 +10,7 @@ import parentView from '@/components/parent-view'
  *         可以传入一个回调函数，参数是当前路由对象，例子看动态路由和带参路由
  *  hideInBread: (false) 设为true后此级路由将不会出现在面包屑中，示例看QQ群路由配置
  *  hideInMenu: (false) 设为true后在左侧菜单不会显示该页面选项
- *  notCache: (false) 设为true后页面不会缓存
+ *  notCache: (false) 设为true后页面在切换标签后不会缓存，如果需要缓存，无需设置这个字段，而且需要设置页面组件name属性和路由配置的name一致
  *  access: (null) 可访问该页面的权限数组，当前路由设置的权限会影响子路由
  *  icon: (-) 该页面在左侧菜单、面包屑和标签导航处显示的图标，如果是自定义图标，需要在图标名称前加下划线'_'
  *  beforeCloseName: (-) 设置该字段，则在关闭当前tab页时会去'@/router/before-close.js'里寻找该字段名对应的方法，作为关闭前的钩子函数
@@ -74,6 +74,24 @@ export default [{
   }]
 },
 {
+  path: '/message',
+  name: 'message',
+  component: Main,
+  meta: {
+    hideInBread: true,
+    hideInMenu: true
+  },
+  children: [{
+    path: 'message_page',
+    name: 'message_page',
+    meta: {
+      icon: 'md-notifications',
+      title: '消息中心'
+    },
+    component: () => import('@/view/single-page/message/index.vue')
+  }]
+},
+{
   path: '/components',
   name: 'components',
   meta: {
@@ -98,6 +116,15 @@ export default [{
       title: '拖拽列表'
     },
     component: () => import('@/view/components/drag-list/drag-list.vue')
+  },
+  {
+    path: 'cropper_page',
+    name: 'cropper_page',
+    meta: {
+      icon: 'md-crop',
+      title: '图片裁剪'
+    },
+    component: () => import('@/view/components/cropper/cropper.vue')
   },
   {
     path: 'tables_page',
@@ -294,7 +321,7 @@ export default [{
   name: 'multilevel',
   meta: {
     icon: 'md-menu',
-    title: '多级菜单1'
+    title: '多级菜单'
   },
   component: Main,
   children: [{
@@ -334,34 +361,6 @@ export default [{
       title: '二级-3'
     },
     component: () => import('@/view/multilevel/level-2-3.vue')
-  }
-  ]
-},
-{
-  path: '/demo',
-  name: 'demo',
-  meta: {
-    icon: 'ios-stats',
-    title: '开发工具'
-  },
-  component: Main,
-  children: [{
-    path: 'form',
-    name: 'form',
-    meta: {
-      icon: 'md-add',
-      title: '表单组件实例'
-    },
-    component: () => import('@/view/excel/upload-excel.vue')
-  },
-  {
-    path: 'table',
-    name: 'table',
-    meta: {
-      icon: 'md-download',
-      title: '表格组件实例'
-    },
-    component: () => import('@/view/excel/export-excel.vue')
   }
   ]
 },
